@@ -5,8 +5,8 @@ namespace SilverShop\Ledger\Tests;
 use SilverShop\Ledger\ShopPostingEntry;
 use SilverShop\Model\Order;
 use SilverStripe\Dev\SapphireTest;
+use SilverStripe\Core\Validation\ValidationException;
 use SilverStripe\Omnipay\Model\Payment;
-use SilverStripe\ORM\ValidationException;
 
 /**
  * Covers the posting-ledger hooks (placement + payment capture), idempotency and immutability.

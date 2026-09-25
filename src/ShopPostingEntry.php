@@ -5,8 +5,8 @@ namespace SilverShop\Ledger;
 use SilverShop\Model\Order;
 use SilverShop\ORM\FieldType\ShopCurrency;
 use SilverStripe\Omnipay\Model\Payment;
+use SilverStripe\Core\Validation\ValidationException;
 use SilverStripe\ORM\DataObject;
-use SilverStripe\ORM\ValidationException;
 use SilverStripe\Security\Member;
 
 /**
