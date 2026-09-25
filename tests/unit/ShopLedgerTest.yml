@@ -1,0 +1,6 @@
+SilverShop\Model\Order:
+  cart:
+    Status: Cart
+  placed:
+    Status: Unpaid
+    Reference: LEDGER-TEST-1

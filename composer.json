@@ -1,0 +1,35 @@
+{
+    "name": "silvershop/ledger",
+    "description": "An immutable financial posting ledger / audit trail for SilverShop orders and payments.",
+    "type": "silverstripe-vendormodule",
+    "keywords": ["silverstripe", "silvershop", "ecommerce", "audit", "ledger", "accounting"],
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "SilverShop Contributors",
+            "homepage": "https://github.com/silvershop/silvershop-ledger/graphs/contributors"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "silverstripe/framework": "^6.0",
+        "silvershop/core": "^6"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.0",
+        "omnipay/dummy": "^3.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "6.x-dev"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "SilverShop\\Ledger\\": "src/",
+            "SilverShop\\Ledger\\Tests\\": "tests/unit/"
+        }
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
+}

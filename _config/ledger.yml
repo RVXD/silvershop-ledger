@@ -1,0 +1,10 @@
+---
+Name: silvershop-ledger
+---
+SilverShop\Model\Order:
+  extensions:
+    - SilverShop\Ledger\OrderLedgerExtension
+
+SilverStripe\Omnipay\Model\Payment:
+  extensions:
+    - SilverShop\Ledger\PaymentLedgerExtension
