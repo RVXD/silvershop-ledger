@@ -49,11 +49,18 @@ class ShopPostingEntry extends DataObject
         'Created.Nice' => 'When',
         'Type' => 'Type',
         'Amount.Nice' => 'Amount',
+        'Order.Reference' => 'Order',
+        'Order.Name' => 'Customer',
         'Reference' => 'Reference',
         'Author.Name' => 'By',
     ];
 
-    private static array $searchable_fields = ['Type', 'Reference'];
+    private static array $searchable_fields = [
+        'Type',
+        'Reference',
+        'Order.Reference',
+        'Order.LatestEmail',
+    ];
 
     /**
      * Append-only: an entry may be created, but never changed once persisted.
