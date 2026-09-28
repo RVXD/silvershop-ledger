@@ -37,7 +37,7 @@ class OrderLedgerExtension extends Extension
         $entry->Currency = $order->Currency();
         $entry->OrderID = $order->ID;
         $entry->Reference = $order->Reference;
-        $entry->Note = 'Order placed';
+        $entry->Note = _t(self::class . '.NOTE_PLACED', 'Order placed');
 
         if ($member = Security::getCurrentUser()) {
             $entry->AuthorID = $member->ID;
@@ -55,9 +55,10 @@ class OrderLedgerExtension extends Extension
 
         $fields->addFieldToTab('Root.Ledger', GridField::create(
             'LedgerEntries',
-            'Ledger',
+            _t(self::class . '.LEDGER', 'Ledger'),
             ShopPostingEntry::get()->filter('OrderID', $order->ID),
             GridFieldConfig_RecordViewer::create()
         ));
+        $fields->findOrMakeTab('Root.Ledger')->setTitle(_t(self::class . '.TAB_LEDGER', 'Ledger'));
     }
 }

@@ -55,6 +55,28 @@ class ShopPostingEntry extends DataObject
         'Author.Name' => 'By',
     ];
 
+    public function summaryFields(): array
+    {
+        return [
+            'Created.Nice' => _t(self::class . '.col_When', 'When'),
+            'TypeLabel' => _t(self::class . '.col_Type', 'Type'),
+            'Amount.Nice' => _t(self::class . '.col_Amount', 'Amount'),
+            'Order.Reference' => _t(self::class . '.col_Order', 'Order'),
+            'Order.Name' => _t(self::class . '.col_Customer', 'Customer'),
+            'Reference' => _t(self::class . '.col_Reference', 'Reference'),
+            'Author.Name' => _t(self::class . '.col_By', 'By'),
+        ];
+    }
+
+    /**
+     * The posting type as a translated label (e.g. "Captured" → "Geïncasseerd"). Falls back to the raw
+     * enum value when a locale has no translation.
+     */
+    public function getTypeLabel(): string
+    {
+        return _t(self::class . '.TYPE_' . $this->Type, (string) $this->Type);
+    }
+
     private static array $searchable_fields = [
         'Type',
         'Reference',
@@ -68,7 +90,10 @@ class ShopPostingEntry extends DataObject
     protected function onBeforeWrite(): void
     {
         if ($this->isInDB()) {
-            throw new ValidationException('Posting entries are immutable and cannot be changed.');
+            throw new ValidationException(_t(
+                self::class . '.IMMUTABLE',
+                'Posting entries are immutable and cannot be changed.'
+            ));
         }
 
         parent::onBeforeWrite();

@@ -42,7 +42,7 @@ class PaymentLedgerExtension extends Extension
         $entry->OrderID = $payment->OrderID;
         $entry->PaymentID = $payment->ID;
         $entry->Reference = $payment->Gateway;
-        $entry->Note = sprintf('Payment %s', strtolower($type));
+        $entry->Note = _t(self::class . '.NOTE_PAYMENT', 'Payment {type}', ['type' => strtolower($type)]);
 
         if ($member = Security::getCurrentUser()) {
             $entry->AuthorID = $member->ID;
