@@ -12,7 +12,7 @@ en:
     has_one_Order: 'Order'
     has_one_Payment: 'Payment'
     has_one_Author: 'Author'
-    col_When: 'When'
+    col_Date: 'Date'
     col_Type: 'Type'
     col_Amount: 'Amount'
     col_Order: 'Order'

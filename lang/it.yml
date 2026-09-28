@@ -12,7 +12,7 @@ it:
     has_one_Order: 'Ordine'
     has_one_Payment: 'Pagamento'
     has_one_Author: 'Autore'
-    col_When: 'Quando'
+    col_Date: 'Data'
     col_Type: 'Tipo'
     col_Amount: 'Importo'
     col_Order: 'Ordine'

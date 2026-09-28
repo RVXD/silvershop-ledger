@@ -58,7 +58,7 @@ class ShopPostingEntry extends DataObject
     public function summaryFields(): array
     {
         return [
-            'Created.Nice' => _t(self::class . '.col_When', 'When'),
+            'Created.Nice' => _t(self::class . '.col_Date', 'Date'),
             'TypeLabel' => _t(self::class . '.col_Type', 'Type'),
             'Amount.Nice' => _t(self::class . '.col_Amount', 'Amount'),
             'Order.Reference' => _t(self::class . '.col_Order', 'Order'),

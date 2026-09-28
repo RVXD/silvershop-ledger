@@ -12,7 +12,7 @@ fr:
     has_one_Order: 'Commande'
     has_one_Payment: 'Paiement'
     has_one_Author: 'Auteur'
-    col_When: 'Quand'
+    col_Date: 'Date'
     col_Type: 'Type'
     col_Amount: 'Montant'
     col_Order: 'Commande'

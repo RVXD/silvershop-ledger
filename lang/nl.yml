@@ -12,7 +12,7 @@ nl:
     has_one_Order: 'Bestelling'
     has_one_Payment: 'Betaling'
     has_one_Author: 'Auteur'
-    col_When: 'Wanneer'
+    col_Date: 'Datum'
     col_Type: 'Type'
     col_Amount: 'Bedrag'
     col_Order: 'Bestelling'

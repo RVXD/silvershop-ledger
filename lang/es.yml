@@ -12,7 +12,7 @@ es:
     has_one_Order: 'Pedido'
     has_one_Payment: 'Pago'
     has_one_Author: 'Autor'
-    col_When: 'Cuándo'
+    col_Date: 'Fecha'
     col_Type: 'Tipo'
     col_Amount: 'Importe'
     col_Order: 'Pedido'

@@ -12,7 +12,7 @@ de:
     has_one_Order: 'Bestellung'
     has_one_Payment: 'Zahlung'
     has_one_Author: 'Autor'
-    col_When: 'Wann'
+    col_Date: 'Datum'
     col_Type: 'Typ'
     col_Amount: 'Betrag'
     col_Order: 'Bestellung'
