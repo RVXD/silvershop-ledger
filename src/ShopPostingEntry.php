@@ -26,7 +26,7 @@ use SilverStripe\Security\Member;
  */
 class ShopPostingEntry extends DataObject
 {
-    private static string $table_name = 'ShopPostingEntry';
+    private static string $table_name = 'SilverShop_PostingEntry';
 
     private static array $db = [
         'Type' => "Enum('Placed,Captured,Refunded,Voided,Adjusted,WriteOff','Placed')",

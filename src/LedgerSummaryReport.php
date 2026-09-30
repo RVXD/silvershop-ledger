@@ -49,7 +49,7 @@ class LedgerSummaryReport extends Report
     {
         $query = SQLSelect::create(
             ['Type' => '"Type"', 'Entries' => 'COUNT(*)', 'Total' => 'SUM("Amount")'],
-            '"ShopPostingEntry"'
+            '"SilverShop_PostingEntry"'
         );
 
         if (!empty($params['StartDate'])) {
