@@ -16,6 +16,7 @@ en:
     col_Type: 'Type'
     col_Amount: 'Amount'
     col_Order: 'Order'
+    col_Document: 'Document'
     col_Customer: 'Customer'
     col_Reference: 'Reference'
     col_By: 'By'

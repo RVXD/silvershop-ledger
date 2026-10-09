@@ -20,9 +20,12 @@ use SilverStripe\Security\Member;
  * @property ?string $Reference
  * @property ?string $Note
  * @property ?string $Data
- * @method   Order   Order()
- * @method   Payment Payment()
- * @method   Member  Author()
+ * @property int     $DocumentID
+ * @property ?string $DocumentClass
+ * @method   Order      Order()
+ * @method   Payment    Payment()
+ * @method   Member     Author()
+ * @method   DataObject Document()
  */
 class ShopPostingEntry extends DataObject
 {
@@ -41,6 +44,9 @@ class ShopPostingEntry extends DataObject
         'Order' => Order::class,
         'Payment' => Payment::class,
         'Author' => Member::class,
+        // Polymorphic link to the source financial document (e.g. a silvershop/invoicing invoice or credit
+        // memo), attached once by the document module. Kept generic so the ledger depends on nothing.
+        'Document' => DataObject::class,
     ];
 
     private static string $default_sort = '"Created" ASC, "ID" ASC';
@@ -63,6 +69,7 @@ class ShopPostingEntry extends DataObject
             'Amount.Nice' => _t(self::class . '.col_Amount', 'Amount'),
             'Order.Reference' => _t(self::class . '.col_Order', 'Order'),
             'Order.Name' => _t(self::class . '.col_Customer', 'Customer'),
+            'DocumentLabel' => _t(self::class . '.col_Document', 'Document'),
             'Reference' => _t(self::class . '.col_Reference', 'Reference'),
             'Author.Name' => _t(self::class . '.col_By', 'By'),
         ];
@@ -85,11 +92,13 @@ class ShopPostingEntry extends DataObject
     ];
 
     /**
-     * Append-only: an entry may be created, but never changed once persisted.
+     * Append-only: an entry's financial data may be created but never changed once persisted. The one
+     * exception is attaching the source {@link Document} once (a reference link, not a money change) —
+     * allowed only while it is still empty.
      */
     protected function onBeforeWrite(): void
     {
-        if ($this->isInDB()) {
+        if ($this->isInDB() && !$this->isAttachingDocument()) {
             throw new ValidationException(_t(
                 self::class . '.IMMUTABLE',
                 'Posting entries are immutable and cannot be changed.'
@@ -97,6 +106,48 @@ class ShopPostingEntry extends DataObject
         }
 
         parent::onBeforeWrite();
+    }
+
+    /**
+     * True when this write only attaches the source document for the first time (DocumentID/DocumentClass,
+     * previously empty) and changes nothing else.
+     */
+    private function isAttachingDocument(): bool
+    {
+        $changed = $this->getChangedFields(true, self::CHANGE_VALUE);
+        unset($changed['LastEdited']);
+        if ($changed === [] || array_diff(array_keys($changed), ['DocumentID', 'DocumentClass']) !== []) {
+            return false;
+        }
+
+        return (int) ($changed['DocumentID']['before'] ?? 0) === 0 && (int) $this->DocumentID > 0;
+    }
+
+    /**
+     * Attach the source document once (no-op if already linked). Keeps the attach logic (and the immutable
+     * write) in the ledger so document modules just call this.
+     */
+    public function attachDocument(DataObject $document): void
+    {
+        if ($this->DocumentID || !$document->exists()) {
+            return;
+        }
+        $this->DocumentID = $document->ID;
+        $this->DocumentClass = $document->ClassName;
+        $this->write();
+    }
+
+    /**
+     * A short label for the linked document (its number/title), for the ledger admin. Empty when unlinked.
+     */
+    public function getDocumentLabel(): string
+    {
+        $document = $this->Document();
+        if (!$document || !$document->exists()) {
+            return '';
+        }
+
+        return (string) ($document->Number ?: $document->getTitle());
     }
 
     public function canEdit($member = null): bool

@@ -16,6 +16,7 @@ fr:
     col_Type: 'Type'
     col_Amount: 'Montant'
     col_Order: 'Commande'
+    col_Document: 'Document'
     col_Customer: 'Client'
     col_Reference: 'Référence'
     col_By: 'Par'

@@ -23,6 +23,22 @@ it only hooks existing extension points.
 - **`LedgerBackfillTask`** (`sake dev/tasks/SilverShop-Ledger-LedgerBackfillTask`) — backfills `Placed`
   entries for orders placed before the module was installed.
 
+## Linking source documents
+
+Each entry has an optional polymorphic **`Document`** `has_one`, so an accounting document (an invoice,
+a credit memo) can be referenced from the ledger without the ledger depending on the module that
+produces it. The relation is **set-once**: attaching a document is a reference link, not a money change,
+so it is the one write allowed on an otherwise-immutable entry — any later attempt to re-point or change
+it is rejected.
+
+```php
+$entry->attachDocument($invoice); // links once; a second call is a no-op
+$entry->getDocumentLabel();        // "INV-2026-00001" (the document Number, or its title) or ''
+```
+
+The entry's CMS summary shows a **Document** column. [silvershop/invoicing](https://github.com/RVXD/silvershop-invoicing)
+wires this up automatically when both modules are installed — nothing to configure.
+
 ## Installation
 
 ```bash
@@ -33,9 +49,10 @@ Then run `dev/build`, and optionally the backfill task for existing orders.
 
 ## Status
 
-Prototype (Layer A of a larger design). A field-level audit layer (`Versioned` / diff table) and
-Magento-style Invoice / Credit-memo documents are possible future layers. See the design notes in the
-consuming project for the full plan.
+Prototype (Layer A of a larger design). Magento-style Invoice / Credit-memo documents are provided by
+[silvershop/invoicing](https://github.com/RVXD/silvershop-invoicing), which references its documents from
+these entries via the `Document` link above. A field-level audit layer (`Versioned` / diff table) is a
+possible future layer. See the design notes in the consuming project for the full plan.
 
 ## Licence
 

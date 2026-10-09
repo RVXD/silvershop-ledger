@@ -82,4 +82,40 @@ class ShopLedgerTest extends SapphireTest
         $this->expectException(ValidationException::class);
         $entry->write();
     }
+
+    public function testSourceDocumentCanBeAttachedOnce(): void
+    {
+        $order = $this->objFromFixture(Order::class, 'placed');
+
+        $entry = ShopPostingEntry::create();
+        $entry->Type = 'Captured';
+        $entry->Amount = 50;
+        $entry->write();
+        $this->assertSame('', $entry->getDocumentLabel(), 'unlinked entry has no document label');
+
+        // Attaching a source document once is allowed (a reference link, not a money change).
+        $entry->attachDocument($order);
+        $linked = ShopPostingEntry::get()->byID($entry->ID);
+        $this->assertSame((int) $order->ID, (int) $linked->DocumentID);
+        $this->assertSame(Order::class, $linked->DocumentClass);
+
+        // Re-attaching is a no-op (already linked).
+        $linked->attachDocument($this->objFromFixture(Order::class, 'cart'));
+        $this->assertSame((int) $order->ID, (int) ShopPostingEntry::get()->byID($entry->ID)->DocumentID);
+    }
+
+    public function testFinancialChangeStillThrowsAfterDocumentAttached(): void
+    {
+        $order = $this->objFromFixture(Order::class, 'placed');
+        $entry = ShopPostingEntry::create();
+        $entry->Type = 'Captured';
+        $entry->Amount = 50;
+        $entry->write();
+        $entry->attachDocument($order);
+
+        $linked = ShopPostingEntry::get()->byID($entry->ID);
+        $linked->Amount = 999;
+        $this->expectException(ValidationException::class);
+        $linked->write();
+    }
 }

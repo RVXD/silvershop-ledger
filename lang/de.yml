@@ -16,6 +16,7 @@ de:
     col_Type: 'Typ'
     col_Amount: 'Betrag'
     col_Order: 'Bestellung'
+    col_Document: 'Dokument'
     col_Customer: 'Kunde'
     col_Reference: 'Referenz'
     col_By: 'Von'

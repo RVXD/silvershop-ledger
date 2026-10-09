@@ -16,6 +16,7 @@ nl:
     col_Type: 'Type'
     col_Amount: 'Bedrag'
     col_Order: 'Bestelling'
+    col_Document: 'Document'
     col_Customer: 'Klant'
     col_Reference: 'Referentie'
     col_By: 'Door'

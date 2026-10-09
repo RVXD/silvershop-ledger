@@ -16,6 +16,7 @@ es:
     col_Type: 'Tipo'
     col_Amount: 'Importe'
     col_Order: 'Pedido'
+    col_Document: 'Documento'
     col_Customer: 'Cliente'
     col_Reference: 'Referencia'
     col_By: 'Por'
